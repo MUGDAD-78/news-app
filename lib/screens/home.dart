@@ -13,14 +13,12 @@ import '../Provider/change_theme.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   //NewsApi allArticals = NewsApi();
-  
   Future<void> refresh() async {
     await Future.delayed(const Duration(seconds: 2));
     setState(() {});
@@ -29,10 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final newsInstance = Provider.of<NewsViewModle>(context, listen: false);
-    final classInstance = Provider.of<ChangeTheme>(
-      context,
-      listen: false
-    );
+    final classInstance = Provider.of<ChangeTheme>(context, listen: false);
     final double widthScreen = MediaQuery.of(context).size.width;
 
     return Scaffold(

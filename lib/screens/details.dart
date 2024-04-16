@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:news_app/Models/news_model.dart';
 import 'package:news_app/Provider/add_to_favorite.dart';
+import 'package:news_app/Provider/change_theme.dart';
 import 'package:news_app/constant/alert_dilog.dart';
+import 'package:news_app/constant/themes.dart';
 import 'package:provider/provider.dart';
 
 class DetailsPage extends StatefulWidget {
@@ -19,10 +21,11 @@ class _DetailsPageState extends State<DetailsPage> {
   bool showTitle = true;
   @override
   Widget build(BuildContext context) {
+    final classInstance = Provider.of<ChangeTheme>(context, listen: false);
+
     var favoriteProviderObject =
         Provider.of<FavoriteProvider>(context, listen: false);
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 237, 236, 236),
       appBar: AppBar(
         title: Text(
           'Details',
@@ -58,7 +61,9 @@ class _DetailsPageState extends State<DetailsPage> {
                 child: Text(
                   DateFormat.yMd().add_jm().format(DateTime.parse(
                       widget.allArticalsFromOtherPage.publishedAt)),
-                  style: TextStyle(fontFamily: "font3", color: Colors.black),
+                  style: TextStyle(fontFamily: "font3", color:  classInstance.themeData == lightTheme
+                          ? Colors.black
+                          : Colors.white),
                 ),
               ),
             ),
@@ -68,7 +73,9 @@ class _DetailsPageState extends State<DetailsPage> {
               child: Text(
                 widget.allArticalsFromOtherPage.title,
                 style: TextStyle(
-                    fontFamily: "font3", color: Colors.black, fontSize: 25),
+                    fontFamily: "font3", color: classInstance.themeData == lightTheme
+                          ? Colors.black
+                          : Colors.white, fontSize: 25),
               ),
             ),
             Divider(
@@ -96,7 +103,12 @@ class _DetailsPageState extends State<DetailsPage> {
                 });
               },
               child: Text(showTitle ? "Show More" : "Show less",
-                  style: TextStyle(fontFamily: "font3", fontSize: 17)),
+                  style: TextStyle(
+                      fontFamily: "font3",
+                      fontSize: 17,
+                      color: classInstance.themeData == lightTheme
+                          ? Colors.black
+                          : Colors.white)),
             ),
             Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 30),
@@ -115,9 +127,11 @@ class _DetailsPageState extends State<DetailsPage> {
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15))),
                   ),
-                  child: const Text(
+                  child:  Text(
                     "Add To Favorite",
-                    style: TextStyle(fontSize: 19),
+                    style: TextStyle(fontSize: 19 , color: classInstance.themeData == lightTheme
+                          ? Colors.black
+                          : Colors.white),
                   ),
                 )),
           ],
