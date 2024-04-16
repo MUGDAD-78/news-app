@@ -11,10 +11,13 @@ import 'package:news_app/screens/signin.dart';
 import 'package:news_app/view_model/news_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'shared/navigator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+ final isDark = prefs.getBool('is_dark');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -30,7 +33,7 @@ Future<void> main() async {
         ChangeNotifierProvider(
           child: const MyApp(),
           create: (context) {
-            return ChangeTheme();
+            return ChangeTheme( isDark!);
           },
         ),
             ChangeNotifierProvider(
